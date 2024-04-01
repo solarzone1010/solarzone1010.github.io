@@ -86,25 +86,45 @@ function prefix(n,m){
   if(m==0){
     let X=['','hen','di','tri','tetr','pent','hex','hept','oct','enne'];
     let Y=['','dec','icos','triacont','tetracont','pentacont','hexacont','heptacont','octacont','enneacont'];
+    let Z=['','hect','dicos','tricos','tetracos','pentacos','hexacos','heptacos','octacos','enneacos'];
+    if(n>99){
+      if(n%100==2){return 'do'+Z[Math.floor(n/100)];}
+      if(n%100==3){return 'tri'+Z[Math.floor(n/100)];}
+      return prefix(n%100,0)+Z[Math.floor(n/100)];
+    }
     if(n<10){return X[n];}
-    if(n==23){return 'tricos'}
+    if(n==23){return 'trecos'}
     if(n%10==2){return 'do'+Y[Math.floor(n/10)];}
     if(n%10==3){return 'tri'+Y[Math.floor(n/10)];}
-    return X[n%10]+(((n>10&&n<20)||(n>29&&n%10>0))?'a':'')+Y[Math.floor(n/10)];
+    if(n>21&&n<29){return X[n%10]+'ecos';}
+    return X[n%10]+(((n>10&&n<20)||(n%10>0))?'a':'')+Y[Math.floor(n/10)];
   }
   if(m==1){
     m--;
     let X=['','kal','mej','gij','ast','lun','ferm','jov','sol','bet','gloc','gax','sup','vers','mult','met','xev','hyp','omniv','out'];
     let Y=['','','barr','gic','asc','luc','ferc','joc','solc','bec'];
-    if(n<20){v=X[n];}
+    let Z=['','cet','mejet','git','aset','lut','fert','jovt','solt','bect'];
+    if(n>99){
+      if(n>129&&n<200){v=prefix(n%100,1).slice(28,-8)+Z[Math.floor(n/100)];}
+      else{v=prefix(n%100,1).slice(28,-7).replace('barr','bar')+Z[Math.floor(n/100)];}
+    }
+    else if(n<20){v=X[n];}
     else if(n>39&&n<50){v=X[n%10]+'asc';}
     else{v=X[n%10].slice(0,-1)+Y[Math.floor(n/10)];}
   }
   else{
     m--;
     let X=['','hep','ott','net','det','unt','ent','fit','syt','bront'];
-    let Y=['','gep','am','hap','kir','pij','sag','pec','nis','zot']
-    if(m<10){v=X[m];}
+    let Y=['','gep','am','hap','kir','pij','sag','pec','nis','zot'];
+    let Z=['','alf','bex','gam','del','thet','yot','kap','lamb','sig'];
+    if(m>99){
+      if(m==102){v='otalp';}
+      else if(m%100==0){v=Z[Math.floor(m/100)]}
+      else if(m%100==2){v='o'+Z[Math.floor(m/100)]}
+      else if(m<200){v=prefix(1,m%100+1).slice(28,-7)+Z[Math.floor(m/100)];}
+      else{v=prefix(1,m%100+1).slice(28,-8)+Z[Math.floor(m/100)];}
+    }
+    else if(m<10){v=X[m];}
     else if(m==22){v='otam';}
     else if(m%10==2){v='o'+Y[Math.floor(m/10)];}
     else if(m>19&&m<30){v=X[m%10]+'am';}

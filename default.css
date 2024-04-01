@@ -1,5 +1,5 @@
 html,table,button,input,textarea {
-   font-family: JetBrains Mono !important;
+   font-family: url("../JetBrainsMono-Medium.tt") format('truetype' !important;
    font-size: 12px;
 }
 .supsub {

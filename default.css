@@ -1,6 +1,7 @@
 @font-face {
     font-family: jetbrains;
     src: url("https://solarzone1010.github.io/JetBrainsMono-Medium.ttf") format('truetype');
+    font-weight: bold;
     font-style: normal;
 }
 

@@ -1,12 +1,12 @@
 @font-face {
     font-family: jetbrains;
-    src: url(../JetBrainsMono-Medium.ttf) format('truetype');
+    src: url('../JetBrainsMono-Medium.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
 }
 
 html,table,button,input,textarea {
-   font-family: jetbrains
+   font-family: jetbrains;
    font-size: 12px;
 }
 .supsub {

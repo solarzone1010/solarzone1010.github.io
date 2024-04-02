@@ -1,5 +1,11 @@
+@font-face {
+    font-family: jetbrains;
+    src: url("https://solarzone1010.github.io/JetBrainsMono-Medium.ttf") format('truetype')
+    font-style: normal;
+}
+
 html,table,button,input,textarea {
-   font-family: url("https://solarzone1010.github.io/JetBrainsMono-Medium.ttf") format('truetype') !important;
+   font-family: jetbrains
    font-size: 12px;
 }
 .supsub {

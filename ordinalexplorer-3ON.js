@@ -1,12 +1,12 @@
 function parenMatch(a,n,d,k=0){
-  console.log(a,n,d,k)
+  //console.log(a,n,d,k)
   p=d;
   i=n;
   while(p!=k){i+=d;p+=(a[i]=='[')?1:(a[i]==']')?-1:0}
   return i;
 }
 function repl(x,a,b){
-  console.log(x,a,b)
+  //console.log(x,a,b)
   if(x==''){return '';}
   if(x==a){return b;}
   if(x.at(-1)=='c'){return x;}
@@ -14,7 +14,8 @@ function repl(x,a,b){
   let m=x.slice(v);
   let c=repl(x.slice(0,v),a,b);
   if(m==a){m=b;}
-  if(m.slice(1,-1)==a){m='['+b+']';}
+  else if(m.slice(1,-1)==a){m='['+b+']';}
+  else{m='['+repl(m.slice(1,-1),a,b)+']';}
   return c+m;
 }
 function FS(a,n){
@@ -43,7 +44,7 @@ function FS(a,n){
     let v=a.slice(i+1,x-1);
     var o=a.slice(0,i);
     let m=null
-    console.log(v)
+    //console.log(v)
     for(let i=0;i<n;i++){
       //console.log(b,c)
       let t=repl(v,b,c);

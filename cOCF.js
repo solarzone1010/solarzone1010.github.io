@@ -337,14 +337,14 @@ function split(a,x){
 }
 
 function tfs(a,n){
-  if(count(a)!=0){return 'Invalid expWression';}
-  return HTML(fs(unabbreviate(a),n));
+  if(count(a)!=0){return 'Invalid expression';}
+  return abbreviate(fs(unabbreviate(a),n));
 }
 
 function executecommand(x){
   if(x==''){return null;}
   let c=x.split(' ')
-  if(c[0]=='fs'){return HTML(fs(unabbreviate(c[1]),Number(c[2])));}
+  if(c[0]=='fs'){return abbreviate(fs(unabbreviate(c[1]),Number(c[2])));}
   if(c[0]=='lt'){return lt(unabbreviate(c[1]),unabbreviate(c[2]));}
   return 'Unknown command.';
 }
@@ -352,8 +352,8 @@ function executecommand(x){
 function HTMLcommand(x){
   if(x==''){return '';}
   let c=x.split(' ')
-  if(c[0]=='fs'){return `fs<br>${HTML(unabbreviate(c[1]))} ${c[2]}`;}
-  if(c[0]=='lt'){return `lt ${HTML(unabbreviate(c[1]))} ${HTML(unabbreviate(c[2]))}`;}
+  if(c[0]=='fs'){return `fs<br>${abbreviate(unabbreviate(c[1]))} ${c[2]}`;}
+  if(c[0]=='lt'){return `lt ${abbreviate(unabbreviate(c[1]))} ${abbreviate(unabbreviate(c[2]))}`;}
   return x;
 }
 

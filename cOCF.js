@@ -12,7 +12,6 @@ function unabbreviate(x){ // removes sugar
   y=y.replaceAll('Ω','p(P(0))');
   y=y.replaceAll('ω','w');
   y=y.replaceAll('psi','p');
-  y=y.replaceAll(/W\d+/g,p=>'W'.repeat(Number(p.slice(1))));
   y=y.replaceAll('L','p(P(P(0)))');
   y=y.replaceAll('R','p(P(P(0)+P(0)))');
   y=y.replaceAll('J','p(P(P(P(0))))');
@@ -43,8 +42,74 @@ function abbreviate(x){
   return x;
 }
 
+function op(x){
+  if(lt(x,'p(p(0))')){return false;}
+  let f=(x[0]=='p')?`p(${sua(arg(x))[0]})`:'P(0)';
+  let g=null;
+  let h=null;
+  if(f=='p(0)'){f='p(p(0))';g=log(x);h=exp(g);}
+  else{g=div(log(x),f);h=exp(mul(f,g))}
+  let c=div(x,h);
+  let d=sub(x,mul(h,div(x,h)));
+  if(d!='0'){return true;}
+  return false;
+}
+
 function HTML(x){
-  return abbreviate(x);
+  //console.log(x);
+  if(x+''=='Infinity'){return 'c';}
+  if(x=='0'){return '0';}
+  if(/^(p\(0\)\+)*p\(0\)$/.test(x)){return ((x.length+1)/5).toString();}
+  let f=(x[0]=='p')?`p(${sua(arg(x))[0]})`:'P(0)';
+  let g=null;
+  let h=null;
+  if(f=='p(0)'){f='p(p(0))';g=log(x);h=exp(g);}
+  else{g=div(log(x),f);h=exp(mul(f,g))}
+  let c=div(x,h);
+  let d=sub(x,mul(h,div(x,h)));
+  //console.log(f,g,h,'',c,d);
+  if(c=='p(0)'&&d=='0'){
+    if(exp(x)!=x){
+      if(x=='p(p(0))'){return 'ω';}
+      if(lt(x,'p(P(0))')){return `ω<sup>${HTML(log(x))}</sup>`;}
+      return `${HTML(f)}<sup>${HTML(g)}</sup>`
+    }
+    if(x=='P(0)'){return 'c';}
+    let m=div(log(lastTerm(arg(x))[1]),'P(0)');
+    let k=exp(mul('P(0)',div(log(lastTerm(arg(x))[1]),'P(0)')));
+    k=div(arg(x),k);
+    //console.log(arg(x),k,m)
+    k=sua(k);
+    t=exp(add(mul('P(0)',m),'P(0)'));
+    let l=null;
+    if(k[0]=='0'){l='0';}
+    else{l='p('+mul(exp(mul('P(0)',m)),k[0])+')';}
+    let r='p('+mul(exp(mul('P(0)',m)),add(k[0],'P(0)'))+')';
+    let [a,b]=split(k[1],r);
+    a='p('+mul(exp(mul('P(0)',m)),a)+')'
+    //console.log(k,r,l,a,b)
+    if(a=='p(0)'){a='0';}
+    l=add(l,add(a,b))
+    let s=''
+    if(lastTerm(arg(x))[1][0]=='P'&&b!='0'){
+      if(m=='p(0)'){s='Ω';}
+      if(m=='p(0)+p(0)'){s='L';}
+      if(m=='p(0)+p(0)+p(0)'){s='R';}
+      if(m=='P(0)'){s='J';}
+      if(s==''){return `ψ(${HTML(arg(x))})`;}
+      if(l=='p(0)'){return s;}
+      return `${s}<sub>${HTML(l)}</sub>`;
+    }
+    return `ψ(${HTML(arg(x))})`;
+  }
+  let a=HTML(h);
+  //console.log(f,h,c,d)
+  if(c!='p(0)'){
+    if(!op(c)){a+=HTML(c)}
+    else{a+=`&sdot;(${HTML(c)})`;}
+  }
+  if(d!='0'){a+='+'+HTML(d);}
+  return a;
 }
 
 function paren(x,n){
@@ -62,10 +127,16 @@ function firstTerm(x){
   return[x.slice(0,m+1),x.slice(m+2)||'0'];
 }
 
-function trimTerm(x){
+function lastTerm(x){
   console.log()
   let m=paren(x,x.length-1);
   return[x.slice(0,m-2)||'0',x.slice(m-1)];
+}
+
+function terms(x){
+  console.log()
+  if(x=='0'){return [];}
+  return[firstTerm(x)[0]].concat(terms(firstTerm(x)[1]));
 }
 
 function trim(s){while(s[s.length-1]==')'){s=s.slice(0,-1);}return s;}
@@ -85,7 +156,7 @@ function lt(x,y){
   return lt(firstTerm(x)[1],firstTerm(y)[1]);
 }
 
-function exp(x){
+function expW(x){
   console.log()
   if(lt(x,'P(0)')){return'0';}
   x=arg(x);
@@ -98,9 +169,7 @@ function exp(x){
   return y.slice(0,-1);
 }
 
-function lv(x){
-  return exp(trimTerm(arg(x)).at(-1));
-}
+function lv(x){return expW(lastTerm(arg(x)).at(-1));}
 
 function fix(s){while(count(s)){s+=')';}return s;}
 function trim(s){while(s.at(-1)==')'){s=s.slice(0,-1);}return s;}
@@ -140,36 +209,36 @@ function root1(x){
 function root2(x){
   console.log();
   if(root1(x)===undefined){return undefined;}
-  let h=x.length-1;
-  let i=trim(x).length+1;
-  let q=root1(x)[0]-root1(x)[1].length+2; // bad root candidates
-  let w=q;
-  let c=root1(x)[1]
-  i=root1(x)[0]-root1(x)[1].length+1;
-  let v=x.slice(0,root1(x)[0]);
-  let z=count(v);
+  let y=root1(x)[1];
+  let i=root1(x)[0];
+  let c=null;
+  let z=null;
+  console.log(x);
   while(1){
-    if(x[i]=='('&&x[i-1]=='p'){
-      console.log(i,x.slice(0,i));
-      let m=x.slice(0,i);
-      let t=count(m);
-      let c=paren(x,i)
-      if(t<=z){
-        if(lt(fix(x.slice(i-1,c)),root1(x)[1])){
-          break;
-        }
-        if(lt(x.slice(i-1,c+1),'P(0)')){
-          q=i;
-          if(t<z){z=t;}
-        }
+    if(i==x.length){return undefined;}
+    let c=paren(x,i);
+    if(lt(x.slice(c-1,i+1),y)){z=[i,x.slice(c-1,i+1)];break;}
+    i++;
+  }
+  i--;
+  console.log(z);
+  while(1){
+    let m=paren(x,i);
+    console.log(m);
+    if(x[m-1]=='p'){
+      let c=paren(x,i+1);
+      let d=terms(x.slice(c+1,i+1));
+      let m=[];
+      for(let j of d){
+        if(lt(j,'P(0)')){m.push(j);}
       }
+      m=m.join('+')
+      z=[i,m];
+      break;
     }
     i--;
   }
-  q--;
-  let n=root1(x)[0];
-  while(count(x.slice(q,n+1))>0){n++;}
-  return [n,x.slice(q,n+1)];
+  return z;
 }
 
 function fs(x,n){
@@ -180,7 +249,7 @@ function fs(x,n){
   if(d=='p(0)'){return x.slice(0,m-2);}
   x=trim(x);
   let o=''
-  console.log(x);
+  //console.log(x);
   if(x.at(-3)=='p'){
     x+='))';
     let k=paren(x,x.length-1);
@@ -188,14 +257,20 @@ function fs(x,n){
     o=x.slice(0,k-1)+('+'+z).repeat(n+1);
   }
   else{
-    let r=root2(y);
-    if(r==undefined){
+    if(y=='P(0)'||lt('P(0)',y)){
       let b=trim(x).slice(0,-3);
-      o=b+'p('+'P('.repeat(n)
+      o=b+'p('+'P('.repeat(n);
     }
     else{
-      let b=trim(x.slice(r[0]-r[1].length+1,r[0])).slice(0,-3);
-      o=x.slice(0,r[0]-r[1].length+1)+b.repeat(n);
+      let r=root2(y);
+      if(r==undefined){
+        let b=trim(x).slice(0,-3);
+        o=b+'p('+'P('.repeat(n);
+      }
+      else{
+        let b=trim(x.slice(r[0]-r[1].length+1,r[0])).slice(0,-3);
+        o=x.slice(0,r[0]-r[1].length+1)+b.repeat(n);
+      }
     }
   }
   o=fix(o).replaceAll('+)',')').replaceAll('(+','(').replaceAll('++','+').replaceAll('()','(0)');
@@ -203,15 +278,73 @@ function fs(x,n){
   return o;
 }
 
+//=========================
+
+function add(x,y){
+  if(x=='0'){return y;}
+  if(y=='0'){return x;}
+  if(lt(firstTerm(x)[0],firstTerm(y)[0])){return y;}
+  let z=firstTerm(x)[0]
+  let w=add(firstTerm(x)[1],y);
+  if(w!='0'){return z+'+'+w;}
+  return z;
+}
+
+function sub(x,y){
+  if(x=='0'){return '0';}
+  if(y=='0'){return x;}
+  if(lt(firstTerm(y)[0],firstTerm(x)[0])){return x;}
+  return sub(firstTerm(x)[1],firstTerm(y)[1]);
+}
+
+function sua(x){return split(x,'P(0)');}
+
+function exp(a){
+  if(a[0]=='P'){return `P(${sub(a,'P(0)')})`;}
+  if(lt(a,'p(p(P(0)))')){return `p(${a})`;}
+  let [x,y]=sua(arg(a));
+  let p=split(y,`p(${add(x,'P(0)')})`)[0];
+  return 'p('+add(x,add(p,sub(a,'p('+add(x,p)+')')))+')';
+}
+
+function log(a){
+  if(a=='0'){return [];}
+  if(a[0]=='P'){return add('P(0)',arg(a));}
+  let [x,y]=sua(arg(a));
+  let [p,q]=split(y,`p(${add(x,'P(0)')})`);
+  if(x=='0'&&p=='0'){
+    return q;
+  }
+  let m=add(`p(${add(x,p)})`,q);
+  return m;
+}
+
+function div(a,b){ // only works when b is a.p.
+  if(lt(a,b)){return '0';}
+  return add(exp(sub(log(a),log(b))),div(firstTerm(a)[1],b));
+}
+
+function mul(a,b){ // only works when a is a.p.
+  if(b=='0'){return '0';}
+  return add(exp(add(log(a),log(b))),mul(a,firstTerm(b)[1]))
+}
+
+function split(a,x){
+  if(a=='0'){return ['0','0'];}
+  if(lt(a,x)){return ['0',a];}
+  if(lt(firstTerm(a)[0],x)){return ['0',a];}
+  return [add(firstTerm(a)[0],split(firstTerm(a)[1],x)[0]),split(firstTerm(a)[1],x)[1]];
+}
+
 function tfs(a,n){
-  if(count(a)!=0){return 'Invalid expression';}
-  return abbreviate(fs(unabbreviate(a),n));
+  if(count(a)!=0){return 'Invalid expWression';}
+  return HTML(fs(unabbreviate(a),n));
 }
 
 function executecommand(x){
   if(x==''){return null;}
   let c=x.split(' ')
-  if(c[0]=='fs'){return HTML(tfs(c[1],Number(c[2])));}
+  if(c[0]=='fs'){return HTML(fs(unabbreviate(c[1]),Number(c[2])));}
   if(c[0]=='lt'){return lt(unabbreviate(c[1]),unabbreviate(c[2]));}
   return 'Unknown command.';
 }

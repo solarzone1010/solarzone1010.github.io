@@ -211,32 +211,41 @@ function root2(x){
   if(root1(x)===undefined){return undefined;}
   let y=root1(x)[1];
   let i=root1(x)[0];
+  let k=[i,y];
   let c=null;
   let z=null;
-  console.log(x);
+  //console.log(x);
   while(1){
     if(i==x.length){return undefined;}
-    let c=paren(x,i);
+    c=paren(x,i);
     if(lt(x.slice(c-1,i+1),y)){z=[i,x.slice(c-1,i+1)];break;}
     i++;
   }
+  let m=paren(x,i);
+  c=findall(x.slice(m+1,i));
+  let [p,q]=[c.slice(0,-1),c.at(-1)];
+  let u='0'
+  for(let i of p){
+    if(lt(u,i)){u=i;}
+  }
+  let j=paren(x,i);
   i--;
-  console.log(z);
   while(1){
-    let m=paren(x,i);
-    console.log(m);
+    m=paren(x,i);
+    //console.log(m);
     if(x[m-1]=='p'){
-      let c=paren(x,i+1);
-      let d=terms(x.slice(c+1,i+1));
-      let m=[];
-      for(let j of d){
-        if(lt(j,'P(0)')){m.push(j);}
-      }
-      m=m.join('+')
-      z=[i,m];
+      c=paren(x,i+1);
+      z=[i,split(x.slice(c+1,i+1),'P(0)')[1]];
       break;
     }
     i--;
+  }
+  console.log(p,q)
+  if((!lt(u,q))&&p){
+    let v=k[0]-k[1].length;
+    let t=x.slice(j-1,v+1);
+    t+='P(0)';v+=4;
+    return [v,t];
   }
   return z;
 }
@@ -275,6 +284,7 @@ function fs(x,n){
   }
   o=fix(o).replaceAll('+)',')').replaceAll('(+','(').replaceAll('++','+').replaceAll('()','(0)');
   if(o[0]=='+'){o=o.slice(1);}
+  o=o||'0';
   return o;
 }
 
@@ -336,15 +346,23 @@ function split(a,x){
   return [add(firstTerm(a)[0],split(firstTerm(a)[1],x)[0]),split(firstTerm(a)[1],x)[1]];
 }
 
+function findall(a){
+  if(a=='0'){return [];}
+  let [p,q]=split(a,'P(0)');
+  return terms(p).map(arg).map(findall).flat().filter(x=>x!='0').concat([q].filter(x=>x!='0'));
+}
+
+//=========================
+
 function tfs(a,n){
   if(count(a)!=0){return 'Invalid expression';}
-  return abbreviate(fs(unabbreviate(a),n));
+  return HTML(fs(unabbreviate(a),n));
 }
 
 function executecommand(x){
   if(x==''){return null;}
   let c=x.split(' ')
-  if(c[0]=='fs'){return abbreviate(fs(unabbreviate(c[1]),Number(c[2])));}
+  if(c[0]=='fs'){return HTML(fs(unabbreviate(c[1]),Number(c[2])));}
   if(c[0]=='lt'){return lt(unabbreviate(c[1]),unabbreviate(c[2]));}
   return 'Unknown command.';
 }
@@ -352,8 +370,8 @@ function executecommand(x){
 function HTMLcommand(x){
   if(x==''){return '';}
   let c=x.split(' ')
-  if(c[0]=='fs'){return `fs<br>${abbreviate(unabbreviate(c[1]))} ${c[2]}`;}
-  if(c[0]=='lt'){return `lt ${abbreviate(unabbreviate(c[1]))} ${abbreviate(unabbreviate(c[2]))}`;}
+  if(c[0]=='fs'){return `fs<br>${HTML(unabbreviate(c[1]))} ${c[2]}`;}
+  if(c[0]=='lt'){return `lt ${HTML(unabbreviate(c[1]))} ${HTML(unabbreviate(c[2]))}`;}
   return x;
 }
 

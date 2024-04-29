@@ -222,13 +222,17 @@ function root2(x){
     i++;
   }
   let m=paren(x,i);
-  c=findall(x.slice(m+1,i));
-  let [p,q]=[c.slice(0,-1),c.at(-1)];
+  let s=lv('p('+x.slice(m+1,i)+')');
+  //console.log(s)
+  s=s=='0'?'P(0)':`P({add(sub(s,'P(0)'),'P(0)')})`
+  let [p,q]=split(x.slice(m+1,i),s);
+  p=findall(p);
   let u='0'
   for(let i of p){
     if(lt(u,i)){u=i;}
   }
   let j=paren(x,i);
+  //console.log(z)
   i--;
   while(1){
     m=paren(x,i);
@@ -240,8 +244,8 @@ function root2(x){
     }
     i--;
   }
-  console.log(p,q)
-  if((!lt(u,q))&&p){
+  //console.log(p,q)
+  if((!lt(u,q))&&(p.length>0)){
     let v=k[0]-k[1].length;
     let t=x.slice(j-1,v+1);
     t+='P(0)';v+=4;

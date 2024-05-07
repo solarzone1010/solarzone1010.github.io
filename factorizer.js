@@ -25692,24 +25692,19 @@ function run(){
   document.getElementById('q').textContent=q.toString();
   let v=Algebrite.run(`(${q.toString()})*x+(${c.toString()})`);
   let u=Algebrite.run(`(${a.toString()})*x^2+(${p.toString()})*x`);
-  let r=Algebrite.add(Algebrite.multiply(Algebrite.quotient(u,v),v),Algebrite.multiply(-1,u));
-  r=Algebrite.simplify(r);
-  let g=(r.toString()==='0')?Algebrite.quotient(v,Algebrite.coeff(v,1)):r;
-  if(Algebrite.coeff(g,1).toString()!='0'){
-    console.log('a');
-    v=g;
-    u=Algebrite.quotient(m,g);
-  }
-  else{
-    if(q.toString()==='0'){document.getElementById('f').textContent=`?`;}
-    v=Algebrite.run(`(${q.toString()})*x+(${c.toString()})`);
-    u=Algebrite.lcm(Algebrite.denominator(Algebrite.real(q)),Algebrite.denominator(Algebrite.real(c)),Algebrite.denominator(Algebrite.imag(q)),Algebrite.denominator(Algebrite.imag(c)));
-    v=Algebrite.multiply(v,u);
-    u=Algebrite.quotient(m,v);
-  }
-  v=Algebrite.simplify(v);
-  u=Algebrite.simplify(u);
-  v=Algebrite.eval(`(${Algebrite.coeff(v,1)})*x+(${Algebrite.coeff(v,0)})`).toString().replaceAll('-1/2-1/2*5^(1/2)','-φ').replaceAll('1/2+1/2*5^(1/2)','φ').replaceAll('-1/2+1/2*5^(1/2)','φ-1').replaceAll('(φ)','φ');
-  u=Algebrite.eval(`(${Algebrite.coeff(u,1)})*x+(${Algebrite.coeff(u,0)})`).toString().replaceAll('-1/2-1/2*5^(1/2)','-φ').replaceAll('1/2-1/2*5^(1/2)','φ').replaceAll('-1/2+1/2*5^(1/2)','φ-1').replaceAll('(φ)','φ');
-  document.getElementById('f').textContent=`(${v})(${u})`;
+  if(q.toString()==='0'){document.getElementById('f').textContent=`?`;}
+  let r=Algebrite.coeff(v,1);
+  v=Algebrite.run(`(${Algebrite.simplify(Algebrite.quotient(q,r)).toString()})*x+(${Algebrite.simplify(Algebrite.quotient(c,r)).toString()})`);
+  v=v.toString().replaceAll('2/(1+5^(1/2))','(-1+5^(1/2))');
+  console.log(v.toString());
+  u=Algebrite.lcm(Algebrite.denominator(Algebrite.real(Algebrite.coeff(v,0))),
+    Algebrite.denominator(Algebrite.real(Algebrite.coeff(v,1))),
+    Algebrite.denominator(Algebrite.imag(Algebrite.coeff(v,0))),
+    Algebrite.denominator(Algebrite.imag(Algebrite.coeff(v,1))));
+  console.log(u.toString());
+  v=Algebrite.multiply(v,u);
+  u=Algebrite.quotient(m,v);
+  v=Algebrite.eval(`(${Algebrite.simplify(Algebrite.coeff(v,1)).toString()})*x+(${Algebrite.simplify(Algebrite.coeff(v,0)).toString()})`).toString().replaceAll('-1/2-1/2*5^(1/2)','-φ').replaceAll('1/2+1/2*5^(1/2)','φ').replaceAll('-1/2+1/2*5^(1/2)','φ-1').replaceAll('(φ)','φ').replaceAll(/\d+\^\(1\/2\)/g,x=>'√<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>').replaceAll(/\^\d+/g,x=>'<sup>'+x.slice(1)+'</sup>');
+  u=Algebrite.eval(`(${Algebrite.simplify(Algebrite.coeff(u,1)).toString()})*x+(${Algebrite.simplify(Algebrite.coeff(u,0)).toString()})`).toString().replaceAll('-1/2-1/2*5^(1/2)','-φ').replaceAll('1/2-1/2*5^(1/2)','φ').replaceAll('-1/2+1/2*5^(1/2)','φ-1').replaceAll('(φ)','φ').replaceAll(/\d+\^\(1\/2\)/g,x=>'√<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>').replaceAll(/\^\d+/g,x=>'<sup>'+x.slice(1)+'</sup>');
+  document.getElementById('f').innerHTML=`(${v})(${u})`;
 }

@@ -25688,8 +25688,8 @@ function run(){
   let p=Algebrite.quotient(Algebrite.add(b,Algebrite.sqrt(Algebrite.add(Algebrite.power(b,2),Algebrite.multiply(-4,a,c)))),2);
   let q=Algebrite.add(b,Algebrite.multiply(p,-1));
   if(q.toString()==='0'){[p,q]=[q,p];}
-  document.getElementById('p').textContent=p.toString();
-  document.getElementById('q').textContent=q.toString();
+  document.getElementById('p').innerHTML=p.toString().replaceAll(/\d+\^\(1\/2\)/g,x=>'√<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>').replaceAll(/\^\d+/g,x=>'<sup>'+x.slice(1)+'</sup>').replaceAll('*√','√').replaceAll('*(','(').replaceAll(')*',')').replace('*x','x');
+  document.getElementById('q').innerHTML=q.toString().replaceAll(/\d+\^\(1\/2\)/g,x=>'√<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>').replaceAll(/\^\d+/g,x=>'<sup>'+x.slice(1)+'</sup>').replaceAll('*√','√').replaceAll('*(','(').replaceAll(')*',')').replace('*x','x');
   let v=Algebrite.run(`(${q.toString()})*x+(${c.toString()})`);
   let u=Algebrite.run(`(${a.toString()})*x^2+(${p.toString()})*x`);
   if(q.toString()==='0'){document.getElementById('f').textContent=`?`;}

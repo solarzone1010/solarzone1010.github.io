@@ -25696,7 +25696,6 @@ function run(){
   r=Algebrite.simplify(r);
   let g=(r.toString()==='0')?Algebrite.quotient(v,Algebrite.coeff(v,1)):r;
   if(Algebrite.coeff(g,1).toString()!='0'){
-    console.log('a');
     v=g;
     u=Algebrite.quotient(m,g);
   }

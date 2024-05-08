@@ -25687,24 +25687,26 @@ function run(){
   document.getElementById('c').textContent=c.toString();
   let p=Algebrite.quotient(Algebrite.add(b,Algebrite.sqrt(Algebrite.add(Algebrite.power(b,2),Algebrite.multiply(-4,a,c)))),2);
   let q=Algebrite.add(b,Algebrite.multiply(p,-1));
-  if(q.toString()==='0'){[p,q]=[q,p];}
-  document.getElementById('p').innerHTML=p.toString().replaceAll(/\d+\^\(1\/2\)/g,x=>'√<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>').replaceAll(/\^\d+/g,x=>'<sup>'+x.slice(1)+'</sup>').replaceAll('*√','√').replaceAll('*(','(').replaceAll(')*',')').replace('*x','x');
-  document.getElementById('q').innerHTML=q.toString().replaceAll(/\d+\^\(1\/2\)/g,x=>'√<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>').replaceAll(/\^\d+/g,x=>'<sup>'+x.slice(1)+'</sup>').replaceAll('*√','√').replaceAll('*(','(').replaceAll(')*',')').replace('*x','x');
-  let v=Algebrite.run(`(${q.toString()})*x+(${c.toString()})`);
-  let u=Algebrite.run(`(${a.toString()})*x^2+(${p.toString()})*x`);
-  if(q.toString()==='0'){document.getElementById('f').textContent=`?`;}
-  let r=Algebrite.coeff(v,1);
-  v=Algebrite.run(`(${Algebrite.simplify(Algebrite.quotient(q,r)).toString()})*x+(${Algebrite.simplify(Algebrite.quotient(c,r)).toString()})`);
-  v=v.toString().replaceAll('2/(1+5^(1/2))','(-1+5^(1/2))');
-  console.log(v.toString());
-  u=Algebrite.lcm(Algebrite.denominator(Algebrite.real(Algebrite.coeff(v,0))),
-    Algebrite.denominator(Algebrite.real(Algebrite.coeff(v,1))),
-    Algebrite.denominator(Algebrite.imag(Algebrite.coeff(v,0))),
-    Algebrite.denominator(Algebrite.imag(Algebrite.coeff(v,1))));
-  console.log(u.toString());
-  v=Algebrite.multiply(v,u);
-  u=Algebrite.quotient(m,v);
-  v=Algebrite.eval(`(${Algebrite.simplify(Algebrite.coeff(v,1)).toString()})*x+(${Algebrite.simplify(Algebrite.coeff(v,0)).toString()})`).toString().replaceAll('-1/2-1/2*5^(1/2)','-φ').replaceAll('1/2+1/2*5^(1/2)','φ').replaceAll('-1/2+1/2*5^(1/2)','φ-1').replaceAll('(φ)','φ').replaceAll(/\d+\^\(1\/2\)/g,x=>'√<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>').replaceAll(/\^\d+/g,x=>'<sup>'+x.slice(1)+'</sup>');
-  u=Algebrite.eval(`(${Algebrite.simplify(Algebrite.coeff(u,1)).toString()})*x+(${Algebrite.simplify(Algebrite.coeff(u,0)).toString()})`).toString().replaceAll('-1/2-1/2*5^(1/2)','-φ').replaceAll('1/2-1/2*5^(1/2)','φ').replaceAll('-1/2+1/2*5^(1/2)','φ-1').replaceAll('(φ)','φ').replaceAll(/\d+\^\(1\/2\)/g,x=>'√<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>').replaceAll(/\^\d+/g,x=>'<sup>'+x.slice(1)+'</sup>');
-  document.getElementById('f').innerHTML=`(${v})(${u})`;
+  p=Algebrite.simplify(Algebrite.quotient(p,a));
+  q=Algebrite.simplify(Algebrite.quotient(q,a));
+  document.getElementById('p').innerHTML=p.toString().replaceAll(/\d+\^\(1\/2\)/g,x=>'√<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>').replaceAll(/\^\d+/g,x=>'<sup>'+x.slice(1)+'</sup>').replaceAll('*','&sdot;').replaceAll(/\d+\^\(1\/4\)/g,x=>'∜<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>');
+  document.getElementById('q').innerHTML=q.toString().replaceAll(/\d+\^\(1\/2\)/g,x=>'√<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>').replaceAll(/\^\d+/g,x=>'<sup>'+x.slice(1)+'</sup>').replaceAll('*','&sdot;').replaceAll(/\d+\^\(1\/4\)/g,x=>'∜<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>');
+  let f=Algebrite.quotient(a,Algebrite.multiply(Algebrite.denominator(p),Algebrite.denominator(q)));
+  let f1=f;
+  f=Algebrite.sqrt(f);
+  let v=Algebrite.multiply(Algebrite.run(`(${Algebrite.denominator(p)})*x+(${Algebrite.numerator(p)})`),f);
+  let v0=Algebrite.run(`(${Algebrite.denominator(p)})*x+(${Algebrite.numerator(p)})`);
+  let v1=Algebrite.multiply(Algebrite.run(`(${Algebrite.denominator(p)})*x+(${Algebrite.numerator(p)})`),f1);
+  let u=Algebrite.multiply(Algebrite.run(`(${Algebrite.denominator(q)})*x+(${Algebrite.numerator(q)})`),f);
+  let u0=Algebrite.run(`(${Algebrite.denominator(q)})*x+(${Algebrite.numerator(q)})`);
+  let u1=Algebrite.multiply(Algebrite.run(`(${Algebrite.denominator(q)})*x+(${Algebrite.numerator(q)})`),f1);
+  let _v=v.toString().replaceAll(/\d+\^\(1\/2\)/g,x=>'√<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>').replaceAll(/\^\d+/g,x=>'<sup>'+x.slice(1)+'</sup>').replaceAll('*','&sdot;').replaceAll(/\d+\^\(1\/4\)/g,x=>'∜<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>');
+  let _u=u.toString().replaceAll(/\d+\^\(1\/2\)/g,x=>'√<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>').replaceAll(/\^\d+/g,x=>'<sup>'+x.slice(1)+'</sup>').replaceAll('*','&sdot;').replaceAll(/\d+\^\(1\/4\)/g,x=>'∜<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>');
+  let _v1=v0.toString().replaceAll(/\d+\^\(1\/2\)/g,x=>'√<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>').replaceAll(/\^\d+/g,x=>'<sup>'+x.slice(1)+'</sup>').replaceAll('*','&sdot;').replaceAll(/\d+\^\(1\/4\)/g,x=>'∜<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>');
+  let _u1=u1.toString().replaceAll(/\d+\^\(1\/2\)/g,x=>'√<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>').replaceAll(/\^\d+/g,x=>'<sup>'+x.slice(1)+'</sup>').replaceAll('*','&sdot;').replaceAll(/\d+\^\(1\/4\)/g,x=>'∜<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>');
+  let _v2=v1.toString().replaceAll(/\d+\^\(1\/2\)/g,x=>'√<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>').replaceAll(/\^\d+/g,x=>'<sup>'+x.slice(1)+'</sup>').replaceAll('*','&sdot;').replaceAll(/\d+\^\(1\/4\)/g,x=>'∜<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>');
+  let _u2=u0.toString().replaceAll(/\d+\^\(1\/2\)/g,x=>'√<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>').replaceAll(/\^\d+/g,x=>'<sup>'+x.slice(1)+'</sup>').replaceAll('*','&sdot;').replaceAll(/\d+\^\(1\/4\)/g,x=>'∜<span style="text-decoration-line:overline">'+x.slice(0,-6).toString()+'</span>');
+  document.getElementById('f').innerHTML=`(${_v})(${_u})`;
+  document.getElementById('g').innerHTML=`(${_v1})(${_u1})`;
+  document.getElementById('h').innerHTML=`(${_v2})(${_u2})`;
 }

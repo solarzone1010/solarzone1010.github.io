@@ -1,4 +1,5 @@
 let t = new Decimal(0);
+let speed = 30
 var precision = 4;
 var limit = new Decimal('10^^8;4.0000000000006e12')
 var exp;
@@ -57,10 +58,10 @@ function getNum(){
 
 function dispNum(x){
   x=x.min(limit);
-  return x.toString() // I give up. It's too slow otherwise.
-//  if(x.lt(1e7)){return x.toNumber().toLocaleString('en-US');}
-//  if(x.lt('e1e7')){return x.div(new Decimal(10).pow(x.log10().floor())).toNumber().toFixed(6)+` × 10<sup>${dispNum(x.log(10).floor())}</sup>`;}
-//  return `10<sup>${dispNum(x.log10().floor())}</sup>`;
+  // return x.toString() // I give up. It's too slow otherwise.
+  if(x.lt(1e7)){return x.toNumber().toLocaleString('en-US');}
+  if(x.lt('e1e7')){return x.div(new Decimal(10).pow(x.log10().floor())).toNumber().toFixed(6)+` × 10<sup>${dispNum(x.log(10).floor())}</sup>`;}
+  return `10<sup>${dispNum(x.log10().floor())}</sup>`;
 }
 
 function getNumEq(){
@@ -68,10 +69,10 @@ function getNumEq(){
 }
 
 function updateText(){
-  t = t.add(t.lt(2)?0.001:0.0001);
+  t = t.lt(2)?t.add(0.001*speed):t.mul(1.00005**speed);
   exp = t.lt(2)?t.mul(5):new Decimal(10).tetrate(t.sub(1))
   document.getElementById("number").innerHTML = getNum();
   document.getElementById("equals").innerHTML = getNumEq();
 }
 
-setInterval(updateText, 10);
+setInterval(updateText, 20);

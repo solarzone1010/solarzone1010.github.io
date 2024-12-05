@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<style>
+    td,tr,th.border {
+      border: 1px solid black;
+    }
+    td.nborder {
+      border: none;
+    }
+    table {
+      border-spacing: 0px;
+      border-collapse: collapse;
+      text-align: center;
+    }
+    * {
+      font-family: Microsoft JhengHei;
+      font-size: 16px;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Chinese Calendar</title>
+</head>
+<body>
+    <div style="text-align:center"><input type="number" value="2024" id="year" maxlength="4" style="width:62px" min="-9400" max="12378">年</div><br>
+    一九二九年前，农历、节气可能会错。
+    <div id="cal"></div>
+    <script src="astronomy.js"></script>
+    <script src="chinese-calendar2.js"></script>
+</body>
+</html>

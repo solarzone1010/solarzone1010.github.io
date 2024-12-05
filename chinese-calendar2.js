@@ -27,7 +27,7 @@ function calcSui(y){
     }
     return s;
   }
-  zhongqi=[...Array(12).keys()].map(x=>(x*30+270)%360).map(x=>Astronomy.SearchSunLongitude(x,dong0,366));
+  let zhongqi=[...Array(12).keys()].map(x=>(x*30+270)%360).map(x=>Astronomy.SearchSunLongitude(x,dong0,366));
   let shuo=[];
   while(dong1.ut-dong0.ut>1){
     shuo.push(dong0);
@@ -63,7 +63,7 @@ function calcYear(y){
 //}
 
 function hou(y){
-  console.log(y);
+  //console.log(y);
   let m=[Astronomy.SearchSunLongitude(0,newyear(y),150)]
   if(m[0]==null){m[0]=hou(y-1)[0].AddDays(365.2422);}
   for(let i=1;i<72;i++){

@@ -1,0 +1,23 @@
+@font-face {
+  font-family: Han;
+  src: url('./TH-Tshyn-P0.ttf') format('truetype');
+  font-style: normal;
+}
+
+@font-face {
+  font-family: FangSong;
+  src: url('../simfang.ttf') format('truetype');
+  font-style: normal;
+}
+
+@font-face {
+  font-family: JhengHei;
+  src: url('./jhenghei.ttf') format('truetype');
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Combinumerals;
+  src: url('./Combinumerals-OGR4.ttf') format('truetype');
+  font-style: normal;
+}

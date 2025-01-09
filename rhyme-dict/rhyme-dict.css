@@ -1,0 +1,61 @@
+* {
+  line-height: 25px;
+  font-family: Han;
+  font-size: 25px;
+  color: #aaa;
+}
+.vertical {
+  writing-mode: vertical-rl;
+}
+.titlechar {
+  font-size: 200%;
+  position: relative;
+  color: black;
+  left: 12.5px;
+}
+.headtitlechar {
+  font-size: 200%;
+  position: relative;
+  color: black;
+  left: 12.5px;
+  font-weight: bold;
+}
+.headchar {
+  font-size: 250%;
+  position: relative;
+  color: black;
+  left: -12.5px;
+  font-weight: bold;
+  display: block;
+  margin-left: 6.25px;
+  margin-right: 6.25px;
+}
+.bigheadchar {
+  font-size: 300%;
+  position: relative;
+  color: black;
+  line-height: 50px;
+  right: 12.5px;
+  display: block;
+  font-weight: bold;
+}
+.entry {
+  position: relative;
+  display: inline-block;
+}
+.info {
+  font-family: inherit;
+  color: red;
+}
+.head {
+  color: black;
+}
+.circ {
+  color: black;
+  position: relative;
+  font-family: Combinumerals !important;
+  writing-mode: horizontal-tb;
+  font-size: 30px;
+  height: 25px;
+  top: 3px;
+}

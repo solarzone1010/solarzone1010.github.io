@@ -1,8 +1,13 @@
-* {
+.rhyme {
   line-height: 25px;
   font-family: Han;
   font-size: 25px;
   color: #aaa;
+}
+.default {
+  line-height: 25px;
+  font-family: Han;
+  font-size: 25px;
 }
 .vertical {
   writing-mode: vertical-rl;

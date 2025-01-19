@@ -85,7 +85,7 @@ function update2(){
   let m=document.getElementById('settime').value;
   if(!m.includes('x')){m+='x1';}
   n=m.split('x')[1];
-  if(n==0){n=1e-6;}
+  //if(n==0){n=1e-6;}
   m=m.split('x')[0].trimRight();
   r=new Date().getTime();
   if(m.toLowerCase()=='now'){

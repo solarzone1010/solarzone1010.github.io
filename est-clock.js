@@ -66,7 +66,7 @@ function EST(d,k=0){ // k = 1 => "simplified" version to avoid infinite recursio
   R.push(Math.floor((m/2599200)%12+12)%12+1);
   R.push(Math.floor((m/86640)%30+30)%30+1);
   m=m%86640;
-  R.push(Math.floor((m/3600)%24+24)%24+24*(m%86640>86400||(m%86640<0&&m%86640> -240)));
+  R.push(Math.floor((m/3600)%24+24)%24+24*(m%86640>=86400||(m%86640<0&&m%86640>= -240)));
   R.push(Math.floor((m/60)%60+60)%60);
   R.push((m%60+60)%60);
   R.push(F);

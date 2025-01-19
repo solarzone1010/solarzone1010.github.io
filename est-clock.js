@@ -34,9 +34,9 @@ function EST(d,k=0){ // k = 1 => "simplified" version to avoid infinite recursio
   let s=Object.values(Astronomy.Seasons(d)).map(x=>x.ut);
   let y=d.getUTCFullYear();
   d=new Astronomy.AstroTime(d);
-  let m=d.ut+10945.5;
+  let m=d.ut+10944.5;
   let f=Astronomy.SearchMoonPhase(180,d,-30).ut;
-  let f1=f+10945.5;
+  let f1=f+10944.5;
   let F=0;
   if(d.ut-f<1/6){
     m=2*f1-m;
@@ -85,6 +85,7 @@ function update2(){
   let m=document.getElementById('settime').value;
   if(!m.includes('x')){m+='x1';}
   n=m.split('x')[1];
+  if(n==0){n=1e-6;}
   m=m.split('x')[0].trimRight();
   r=new Date().getTime();
   if(m.toLowerCase()=='now'){

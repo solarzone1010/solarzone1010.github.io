@@ -62,6 +62,7 @@ function calcYear(y){
 //
 //}
 
+
 function hou(y){
   //console.log(y);
   let m=[Astronomy.SearchSunLongitude(0,newyear(y),150)]
@@ -154,8 +155,10 @@ function update(){
   let H='玄鸟至，雷乃声，光始电，桐始华，田鼠隐，虹始见，萍始生，鸠拂羽，戴胜降，蝼蝈鸣，蚯蚓出，王瓜生，苦菜秀，靡草死，麦秋至，螳螂生，鹃始鸣，乌鸫寂，';
   H+=   '鹿角解，蜩始鸣，半夏生，温风至，蟋居宇，鹰始挚，腐草萤，土润溽，大雨行，凉风至，白露降，寒蝉鸣，鹰乃祭，天地肃，禾乃登，鸿雁来，玄鸟归，群鸟羞，';
   H+=   '雷收声，蛰坯户，水始涸，鸿雁宾，雀入水，菊花黄，豺祭兽，草木黄，蛰虫伏，水始冻，地始冻，雉入水，虹不见，气降升，闭塞冬，鴠不鸣，虎始交，荔挺出，';
-  H+=   '蚯蚓结，麇角解，水泉动，雁北乡，鹊始巢，雉鸡鸣，鸡乳雉，征鸟疾，泽腹坚，东风解，蛰虫振，鱼负冰，獭祭鱼，鸿雁北，草木萌，桃始华，仓庚鸣，鹰化鸠';
+  H+=   '蚯蚓结，麋角解，水泉动，雁北乡，鹊始巢，雉鸡鸣，鸡乳雉，征鸟疾，泽腹坚，东风解，蛰虫振，鱼负冰，獭祭鱼，鸿雁北，草木萌，桃始华，仓庚鸣，鹰化鸠';
   H=H.split('，');
+//  console.log(J)
+//  console.log(H)
   let S='甲乙丙丁戊己庚辛壬癸';
   let B='子丑寅卯辰巳午未申酉戌亥';
   let y=parseInt(document.getElementById('year').value);
@@ -185,8 +188,8 @@ function update(){
   let s=[s0.dec_solstice,s1.mar_equinox,s1.jun_solstice,s1.sep_equinox,s1.dec_solstice,s2.mar_equinox];
   s=s.map(X);
   for(let i=1;i<13;i++){
-    let a0=new Date();
-    let a1=new Date()
+    let a0=new Date(Date.UTC(2000,0,1,0,0,0));
+    let a1=new Date(Date.UTC(2000,0,1,0,0,0));
     a0.setUTCFullYear(y);
     a0.setUTCMonth(i-1);
     a1.setUTCFullYear(y);
@@ -194,7 +197,7 @@ function update(){
     let l=X(new Astronomy.AstroTime(a1))-X(new Astronomy.AstroTime(a0));
     for(let j=1;j<l+1;j++){
       A.push([]);
-      let d=new Date();
+      let d=new Date(Date.UTC(2000,0,1,0,0,0));
       d.setUTCFullYear(y);
       d.setUTCMonth(i-1);
       d.setUTCDate(j);
@@ -308,3 +311,14 @@ function update(){
 document.getElementById('year').value=new Date().getFullYear();
 update();
 document.getElementById('year').addEventListener('keyup',(e)=>{e.key=='Enter'?update():null;});
+
+//for(let i=3000;;i--){
+//  let w=Astronomy.Seasons(i).dec_solstice;
+//  let r=Astronomy.SearchMoonPhase(180,w,30).ut-w.ut;
+//  let r0=w.ut-Astronomy.SearchMoonPhase(180,w,-30).ut;
+//  let d=Math.floor(w.ut+1/2);
+//  let t=w.ut+1/2;
+//  let h=24*(t-d)-24*(t-d>.5);
+//  //if(Math.min(r,r0)<1&&Math.abs(h)<.5){console.log(i,24*Math.min(r,r0));}
+//  if(Math.abs(h)<12/293){console.log(i)}
+//}

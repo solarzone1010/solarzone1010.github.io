@@ -5,6 +5,12 @@
 }
 
 @font-face {
+  font-family: Han2;
+  src: url('./TH-Tshyn-P2.ttf') format('truetype');
+  font-style: normal;
+}
+
+@font-face {
   font-family: FangSong;
   src: url('../simfang.ttf') format('truetype');
   font-style: normal;

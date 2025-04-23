@@ -1,5 +1,5 @@
 let t = new Decimal(0);
-let speed = 30
+let speed = 1;
 var precision = 4;
 var limit = new Decimal('10^^8;4.0000000000006e12')
 var exp;

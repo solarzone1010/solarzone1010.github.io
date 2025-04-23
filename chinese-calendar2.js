@@ -121,7 +121,7 @@ function number3(x){
 function table(x){
   let t='<table>';
   //t+=['<b>公历</b>','','<b>农历</b>','<b>廿四节气</b>','<b>七十二候</b>']
-  t+='<tr><td colspan="2"><b>公历</b></td><td><b>农历与干支</b></td><td><b>廿四节气</b></td><td><b>七十二候</b></td><td><b>分至历</b></td><td><b>九九与三伏</b></td></tr>'
+  t+='<tr><td colspan="2"><b>公历</b></td><td><b>农历与干支</b></td><td><b>廿四节气</b></td><td><b>七十二候</b></td><td><b>果糕历</b></td><td><b>九九与三伏</b></td></tr>'
   for(let i of x){
     t+='<tr class="border">';
     for(let j of i){
@@ -150,7 +150,7 @@ function update(){
   let A=[];
   let D=' 东冬江支微鱼虞齐佳灰真文元寒删铢筱巧皓哿马养梗迥有宥沁勘艳卅世';
   let N='日一二三四五六七八九十冬腊';
-  let E='日月火水木金土'
+  let E='㈰㈪㈫㈬㈭㈮㈯'
   let J='春分 、 清明 、 谷雨 、 立夏 、 小满 、 芒种 、 夏至 、 小暑 、 大暑 、 立秋 、 处暑 、 白露 、 秋分 、 寒露 、 霜降 、 立冬 、 小雪 、 大雪 、 冬至 、 小寒 、 大寒 、 立春 、 雨水 、 惊蛰'.split(' 、 ');
   let H='玄鸟至，雷乃声，光始电，桐始华，田鼠隐，虹始见，萍始生，鸠拂羽，戴胜降，蝼蝈鸣，蚯蚓出，王瓜生，苦菜秀，靡草死，麦秋至，螳螂生，鹃始鸣，乌鸫寂，';
   H+=   '鹿角解，蜩始鸣，半夏生，温风至，蟋居宇，鹰始挚，腐草萤，土润溽，大雨行，凉风至，白露降，寒蝉鸣，鹰乃祭，天地肃，禾乃登，鸿雁来，玄鸟归，群鸟羞，';
@@ -161,6 +161,7 @@ function update(){
 //  console.log(H)
   let S='甲乙丙丁戊己庚辛壬癸';
   let B='子丑寅卯辰巳午未申酉戌亥';
+  let K='冬寒雨春谷芒夏暑露秋霜雪';
   let y=parseInt(document.getElementById('year').value);
   //if(y<1800||y>=2200){return;}
   let C0=calcYear(y-1);
@@ -239,13 +240,13 @@ function update(){
       A.at(-1).push('**'.repeat(!w)+`<b>${number2(i)}月${j<11?N[j]+"日":number2(j)}</b>　${B[i-1]}${D[j]}`);
       A.at(-1).push('**'.repeat(!w)+`周${N[w]}　${E[w]}`)
       let v=number(d-F+1);
-      A[W][1]+='　'+'　'.repeat(5-v.length)+v+'日'
+      A[W][1]+='　年里第'+'　'.repeat(5-v.length)+v+'日'
       A.at(-1).push(`${ganzhi(n+599996)}${jj?'闰':'年'}${ii>1?N[ii]:'正'}月${m<11?'初'+N[m]:number2(m)}`
         +`　${'朔弦望晦　'[h]}<img/>`);
       if(d==X(C1[1][0])){A[W][2]=' '+A[W][2];}
       if(m==1){A[W][2]=' '+A[W][2];}
       if(m==1&&jj){A[W][2]='  '+A[W][2];}
-      A[W][2]+=`　${ganzhi(n*12+ii-47+6000000)}月${ganzhi((d+599999994)%60)}日`;
+      A[W][2]+=`　${ganzhi(n*12+ii+5999953)}月${ganzhi((d+599999994)%60)}日`;
       //let v=number(d-F+1);
       let M=Math.min(...Q.filter(x=>X(x)>=d).map(X));
       let q=Q.map(X).indexOf(M);
@@ -286,15 +287,28 @@ function update(){
       let sh1=(s.indexOf(sh)+3)%4;
       let sq2=d-sq;
       let sh2=sh-d;
-      if(sq==sh){A[W][5]='        '+J[sh1*6];}
-      else{A[W][5]=`${J[sh1*6][0]}前${sh2<11?N[sh2]+'日':number3(sh2)}${J[sq1*6][0]}后${sq2<11?N[sq2]+'日':number3(sq2)}`;}
+//      if(sq==sh){A[W][5]='        '+J[sh1*6];}
+//      else{A[W][5]=`${J[sh1*6][0]}前${sh2<11?N[sh2]+'日':number3(sh2)}${J[sq1*6][0]}后${sq2<11?N[sq2]+'日':number3(sq2)}`;}
+      A[W][5]='';
       if(m0<81){A[W][6]=`${N[Math.floor(m0/9)+1]}九第${N[m0%9+1]}日<img/>`;}
-      else if(m0<90){A[W][6]=`九九又${N[m0%9+1]}日<img/>`;}
+      //else if(m0<90){A[W][5]=`九九又${N[m0%9+1]}日<img/>`;}
       if(m1>=0){A[W][6]=`${N[Math.floor(m1/9)+1]}九第${N[m1%9+1]}日<img/>`;}
       if(d>=qr&&d<qz){A[W][6]=`入伏第${N[d-qr+1]}日<img/>`;}
       else if(d>=qr&&d<qm){A[W][6]=`中伏第${number2(d-qz+1).replace('　','')+'日'.repeat(d<qz+10)}`;}
       else if(d>=qr&&d<qm+10){A[W][6]=`末伏第${N[d-qm+1]}日<img/>`;}
-      if((m0<90&&!(m0%9))||(m1>=0&&!(m1%9))||d==qr||d==qz||d==qm){A[W][6]='           '+A[W][6];}
+      if((m0<81&&!(m0%9))||(m1>=0&&!(m1%9))||d==qr||d==qz||d==qm){A[W][6]='           '+A[W][6];}
+      let gd=d-16061;
+      let gn=Math.floor((gd*293+292.9999)/8918);
+      let gn1=gn;
+      let gy=Math.floor(gn/12);
+      gn-=gy*12
+      gy=ganzhi(gy+2044+599996);
+      gd-=Math.floor((8918*gn1)/293)-1;
+      A[W][5]=`${gy}年${K[gn]}月${gd<11?'初'+N[gd]:number2(gd)}`;
+      if(gn==0&&gd==1){A[W][5]='  '+A[W][5];}
+      else if(gn%3==0&&gd==1){A[W][5]='        '+A[W][5];}
+      else if(gd==1){A[W][5]='          '+A[W][5];}
+      else if(gd==16){A[W][5]='    '+A[W][5];}
       let now=new Date();
       if(y==now.getFullYear()&&i==now.getMonth()+1&&j==now.getDate()){A[W][0]='*'+(A[W][0][0]=='*'?A[W][0].slice(2):A[W][0]);}
       //else if(!w){A[j][i]='**'+A[j][i];}
@@ -322,3 +336,10 @@ document.getElementById('year').addEventListener('keyup',(e)=>{e.key=='Enter'?up
 //  //if(Math.min(r,r0)<1&&Math.abs(h)<.5){console.log(i,24*Math.min(r,r0));}
 //  if(Math.abs(h)<12/293){console.log(i)}
 //}
+
+//X=Astronomy.Seasons(2043).dec_solstice;
+//Y=[];
+//for(let i=0;i<360;i+=5){
+//  Y.push(Math.floor(Astronomy.SearchSunLongitude((i+270)%360,X,366).ut-X.ut));
+//}
+//console.log(Y.toString());

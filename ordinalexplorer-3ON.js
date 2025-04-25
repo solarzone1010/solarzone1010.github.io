@@ -5,7 +5,7 @@ function parenMatch(a,n,d,k=0){
   while(p!=k){i+=d;p+=(a[i]=='[')?1:(a[i]==']')?-1:0}
   return i;
 }
-function repl(x,a,b){
+function repl(x,a,b){ // replaces a with b in x
   //console.log(x,a,b)
   if(x==''){return '';}
   if(x==a){return b;}
@@ -38,15 +38,15 @@ function FS(a,n){
   if(j==0){
     let x=a.lastIndexOf('[]')+1;
     let i=parenMatch(a,x,-1,1);
-    let k=x+2==a.length?0:parenMatch(a,x+2,-1);
+    let k=x+2==a.length?-1:parenMatch(a,x+2,-1);
     let b=a.slice(k+1,i)||'c';
     let c=b;
     let v=a.slice(i+1,x-1);
     var o=a.slice(0,i);
     let m=null
-    //console.log(v)
+    console.log(v)
     for(let i=0;i<n;i++){
-      //console.log(b,c)
+      console.log(b,c)
       let t=repl(v,b,c);
       o+='['+t+']';
       c+='['+t+']';

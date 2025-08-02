@@ -47,8 +47,8 @@ function FS(M,n){
   let i=M.length-1;
   if(M.at(-1).length==2&&M.at(-1)[1]==1){
     let r=parent(M,i);
-    let l=M.length+0;
     M=M.slice(0,-1);
+    let l=M.length+0;
     for(let i=0;i<n;i++){M=M.concat(M.slice(r,l));}
     return M;
   }
@@ -81,4 +81,5 @@ function calculate(){
 }
 
 calculate();
+
 

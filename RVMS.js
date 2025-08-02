@@ -60,7 +60,7 @@ function FS(M,n){
     for(let j=r+1;j<l;j++){
       M.push([]);
       for(let k=0;k<M[j].length;k++){
-        M.at(-1).push(M[j][k]+(l-r-1)*i*(M[j][k]>M[r][0]));
+        M.at(-1).push(M[j][k]+(M[l-1][0]-M[r][0])*i*(M[j][k]>M[r][0]));
       }
     }
   }
@@ -81,5 +81,6 @@ function calculate(){
 }
 
 calculate();
+
 
 

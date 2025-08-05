@@ -97,6 +97,7 @@ function ganzhi(x){
 
 function number(x){
   let N='日一二三四五六七八九十冬腊';
+  if(x==0){return '零';}
   if(x<11){return N[x];}
   if(x<100){
     if(x<20){return'十'+N[x-10];}
@@ -239,8 +240,8 @@ function update(){
       if(d==X(Astronomy.SearchMoonPhase(270,u,30))){h=3;}
       A.at(-1).push('**'.repeat(!w)+`<b>${number2(i)}月${j<11?N[j]+"日":number2(j)}</b>　${B[i-1]}${D[j]}`);
       A.at(-1).push('**'.repeat(!w)+`周${N[w]}　${E[w]}`)
-      let v=number(d-F+1);
-      A[W][1]+='　年里第'+'　'.repeat(5-v.length)+v+'日'
+      let v=d-F+1;
+      A[W][1]+='　年第'+(v<100?(v<10?'　':v<20?'一':'')+number(v)+(v<10||v%10==0?'　':''):number(Math.floor(v/100))+number(Math.floor(v/10)%10)+number(v%10))+'日'
       A.at(-1).push(`${ganzhi(n+599996)}${jj?'闰':'年'}${ii>1?N[ii]:'正'}月${m<11?'初'+N[m]:number2(m)}`
         +`　${'朔弦望晦　'[h]}<img/>`);
       if(d==X(C1[1][0])){A[W][2]=' '+A[W][2];}

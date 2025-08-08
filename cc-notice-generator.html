@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calendar notice generator</title>
+    <style>
+        @font-face {
+            font-family: jetbrains;
+            src: url('../JetBrainsMono-Medium.ttf') format('truetype');
+            font-style: normal;
+        }
+        td,tr,th.border {
+          border: 1px solid black;
+        }
+        td.nborder {
+          border: none;
+        }
+        html,table {
+          border-spacing: 0px;
+          border-collapse: collapse;
+          text-align: center;
+          font-family: jetbrains, JhengHei;
+        }
+        tr {
+          font-size: 12px;
+        }
+    </style>
+    <link rel="stylesheet" href="../chinese-fonts.css">
+</head>
+<body>
+    Generate notices for the year <input type="number" value="2024" id="year" maxlength="4" style="width:62px" min="-9400" max="12378">
+    <div id="notices"></div>
+    <script src="astronomy.js"></script>
+    <script src="cc-notice-generator.js"></script>
+</body>
+</html>

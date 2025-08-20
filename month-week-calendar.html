@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    td,tr,th.border {
+      border: 1px solid black;
+      padding: 2px;
+      text-align: center;
+    }
+    td.nborder {
+      border: none;
+    }
+    td.header {
+      font-weight: bold;
+    }
+    table {
+      border-spacing: 0px;
+      border-collapse: collapse;
+    }
+    html {
+      font-family: JetBrains Mono;
+      font-size: 12px;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <link href="default.css" rel="stylesheet" type="text/css">
+    <title>Month-week calendar</title>
+</head>
+<body>
+    <h2>Month-Week Calendar</h2>
+    <p>
+        You may have heard of the ISO week calendar, or just "the ISO calendar". Using weeks beginning on Monday, <br>
+        it defines a week-year, and sets the first week in a year to be the first one with a majority of its days in January. <br>
+        However, it has a problem: consider the date 2025W34-3, on which I am writing this text. <br>
+        What month is it in? You can't tell just by looking at it... but we can combine it with months! So we get the "month-week" calendar.
+    </p>
+    <p>
+        The rule for the month-week calendar is that the first week of a month is the first week that a majority of <br>
+        that month, or, equivalently, the first week that has its Thursday in the month.
+    </p>
+    In the following table, the entry <i>w</i> (<i>n</i>) means that the week-month starts on week <i>w</i> of the year, <br>
+    and has <i>n</i> weeks. The top half of a given weekday is for a normal year, the bottom half for a leap year. <br><br>
+    <table>
+        <tr><td class="header">Year start</td><td class="header">Jan</td><td class="header">Feb</td><td class="header">Mar</td><td class="header">Apr</td><td class="header">May</td><td class="header">Jun</td><td class="header">Jul</td><td class="header">Aug</td><td class="header">Sep</td><td class="header">Oct</td><td class="header">Nov</td><td class="header">Dec</td><td class="header">Total</td></tr>
+        <tr><td style="text-align:right;" rowspan=2>Mon</td><td rowspan=2>01 (4)</td><td>05 (4)</td><td>09 (5)</td><td rowspan=2>14 (4)</td><td rowspan=2>18 (5)</td><td rowspan=2>23 (4)</td><td rowspan=2>27 (4)</td><td rowspan=2>31 (5)</td><td rowspan=2>36 (4)</td><td>40 (4)</td><td>44 (5)</td><td rowspan=2>49 (4)</td><td rowspan=2>52</td></tr>
+        <tr><td>05 (5)</td><td>10 (4)</td><td>40 (5)</td><td>45 (4)</td></tr>
+        <tr><td style="text-align:right;" rowspan=2>Tue</td><td rowspan=2>01 (5)</td><td rowspan=2>06 (4)</td><td rowspan=2>10 (4)</td><td rowspan=2>14 (4)</td><td rowspan=2>18 (5)</td><td rowspan=2>23 (4)</td><td>27 (4)</td><td>31 (5)</td><td rowspan=2>36 (4)</td><td rowspan=2>40 (5)</td><td rowspan=2>45 (4)</td><td rowspan=2>49 (4)</td><td rowspan=2>52</td></tr>
+        <tr><td>27 (5)</td><td>32 (4)</td></tr>
+        <tr><td style="text-align:right;" rowspan=2>Wed</td><td rowspan=2>01 (5)</td><td rowspan=2>06 (4)</td><td rowspan=2>10 (4)</td><td>14 (4)</td><td>18 (5)</td><td rowspan=2>23 (4)</td><td rowspan=2>27 (5)</td><td rowspan=2>32 (4)</td><td rowspan=2>36 (4)</td><td rowspan=2>40 (5)</td><td rowspan=2>45 (4)</td><td>49 (4)</td><td>52</td></tr>
+        <tr><td>14 (5)</td><td>19 (4)</td><td>49 (5)</td><td>53</td></tr>
+        <tr><td style="text-align:right;" rowspan=2>Thu</td><td rowspan=2>01 (5)</td><td rowspan=2>06 (4)</td><td rowspan=2>10 (4)</td><td rowspan=2>14 (5)</td><td rowspan=2>19 (4)</td><td rowspan=2>23 (4)</td><td rowspan=2>27 (5)</td><td rowspan=2>32 (4)</td><td>36 (4)</td><td>40 (5)</td><td rowspan=2>45 (4)</td><td rowspan=2>49 (5)</td><td rowspan=2>53</td></tr>
+        <tr><td>36 (5)</td><td>41 (4)</td></tr>
+        <tr><td style="text-align:right;" rowspan=2>Fri</td><td rowspan=2>01 (4)</td><td rowspan=2>05 (4)</td><td>09 (4)</td><td>13 (5)</td><td rowspan=2>18 (4)</td><td>22 (4)</td><td>26 (5)</td><td rowspan=2>31 (4)</td><td rowspan=2>35 (5)</td><td rowspan=2>40 (4)</td><td rowspan=2>44 (4)</td><td rowspan=2>48 (5)</td><td rowspan=2>52</td></tr>
+        <tr><td>09 (5)</td><td>14 (4)</td><td>22 (5)</td><td>27 (4)</td></tr>
+        <tr><td style="text-align:right;" rowspan=2>Sat</td><td rowspan=2>01 (4)</td><td rowspan=2>05 (4)</td><td rowspan=2>09 (5)</td><td rowspan=2>14 (4)</td><td rowspan=2>18 (4)</td><td rowspan=2>22 (5)</td><td rowspan=2>27 (4)</td><td>31 (4)</td><td>35 (5)</td><td rowspan=2>40 (4)</td><td>44 (4)</td><td>48 (5)</td><td rowspan=2>52</td></tr>
+        <tr><td>31 (5)</td><td>36 (4)</td><td>44 (5)</td><td>49 (4)</td></tr>
+        <tr><td style="text-align:right;" rowspan=2>Sun</td><td rowspan=2>01 (4)</td><td rowspan=2>05 (4)</td><td rowspan=2>09 (5)</td><td rowspan=2>14 (4)</td><td>18 (4)</td><td>22 (5)</td><td rowspan=2>27 (4)</td><td rowspan=2>31 (5)</td><td rowspan=2>36 (4)</td><td rowspan=2>40 (4)</td><td rowspan=2>44 (5)</td><td rowspan=2>49 (4)</td><td rowspan=2>52</td></tr>
+        <tr><td>18 (5)</td><td>23 (4)</td></tr>
+    </table>
+</body>
+</html>

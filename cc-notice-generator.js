@@ -177,11 +177,15 @@ function table(x){
 }
 
 let translations={
+  "雨水":["Rainwater","Yushoei"],
+  "獭祭鱼":["otter sacrifices fish","Taajihyu"],
+  "鸿雁北":["the black-billed goose goes north","Horngyannbeei"],
+  "草木萌":["grasses and trees sprout","Tsaomuhmerng"],
 
-}
-
-let romanizations={
-
+  "处暑":["End of Heat","Chuhshuu"],
+  "鹰乃祭":["the eagle sacrifices","Ingnaejih"],
+  "天地肃":["sky and earth shrink","Tiandihsuh"],
+  "禾乃登":["crops ascend","Hernaedeng"],
 }
 
 let shinjintai={
@@ -193,14 +197,19 @@ let shinjintai={
   "鱼":"魚",
   "负":"負",
   "冰":"氷",
+  "处":"処",
+  "鹰":"鷹",
+  "獭":"獺",
+  "獭":"獺",
+  "鸿":"鴻",
 }
 
 function getTranslation(x){
-  return translations[x]||'*trans.*';
+  return (translations[x]||['*trans.*','*rom.*'])[0];
 }
 
 function getRomanization(x){
-  return romanizations[x]||'*rom.*';
+  return (translations[x]||['*trans.*','*rom.*'])[1];
 }
 
 function addShinjintai(x){
@@ -268,4 +277,5 @@ The three parts (候) of ${J[p1]} (${getTranslation(J[p1])}; ${getRomanization(J
 
 document.getElementById('year').value=new Date().getFullYear();
 update();
+
 document.getElementById('year').addEventListener('keyup',(e)=>{e.key=='Enter'?update():null;});

@@ -177,31 +177,48 @@ function table(x){
 }
 
 let translations={
-  "雨水":["Rainwater","Yushoei"],
-  "獭祭鱼":["otter sacrifices fish","Taajihyu"],
-  "鸿雁北":["the black-billed goose goes north","Horngyannbeei"],
-  "草木萌":["grasses and trees sprout","Tsaomuhmerng"],
+  '雨水':['Rainwater','Yushoei'],
+  '獭祭鱼':['otter sacrifices fish','Taajihyu'],
+  '鸿雁北':['the black-billed goose goes north','Horngyannbeei'],
+  '草木萌':['grasses and trees sprout','Tsaomuhmerng'],
 
-  "处暑":["End of Heat","Chuhshuu"],
-  "鹰乃祭":["the eagle sacrifices","Ingnaejih"],
-  "天地肃":["sky and earth shrink","Tiandihsuh"],
-  "禾乃登":["crops ascend","Hernaedeng"],
+  '惊蛰':['Hibernating Insects Awaken','Jingjer'],
+  '桃始华':['the peach tree starts flowering','Taurshyyhwa'],
+  '仓庚鸣':['the black-naped oriole calls','Tsang\'gengmyng'],
+  '鹰化鸠':['eagles turn into doves','Inghuahjiou'],
+
+  '处暑':['End of Heat','Chuhshuu'],
+  '鹰乃祭':['the eagle sacrifices','Ingnaejih'],
+  '天地肃':['sky and earth shrink','Tiandihsuh'],
+  '禾乃登':['crops ascend','Hernaedeng'],
+
+  '白露':['White Dew','Bairluh'],
+  '鸿雁来':['the swan goose comes','Horngyannlair'],
+  '玄鸟归':['swallow returns','Shyuan\'neauguei'],
+  '群鸟羞':['birds store food','Chyun\'neaushiou']
 }
 
 let shinjintai={
-  "凉":"涼",
-  "风":"風",
-  "鸣":"鳴",
-  "东":"東",
-  "蛰":"蟄",
-  "鱼":"魚",
-  "负":"負",
-  "冰":"氷",
-  "处":"処",
-  "鹰":"鷹",
-  "獭":"獺",
-  "獭":"獺",
-  "鸿":"鴻",
+  '凉':'涼',
+  '风':'風',
+  '鸣':'鳴',
+  '东':'東',
+  '蛰':'蟄',
+  '鱼':'魚',
+  '负':'負',
+  '冰':'氷',
+  '处':'処',
+  '鹰':'鷹',
+  '獭':'獺',
+  '獭':'獺',
+  '鸿':'鴻',
+  '鸟':'鳥',
+  '归':'帰',
+  '惊':'驚',
+  '蛰':'蟄',
+  '华':'華',
+  '仓':'倉',
+  '鸠':'鳩'
 }
 
 function getTranslation(x){
@@ -279,3 +296,4 @@ document.getElementById('year').value=new Date().getFullYear();
 update();
 
 document.getElementById('year').addEventListener('keyup',(e)=>{e.key=='Enter'?update():null;});
+

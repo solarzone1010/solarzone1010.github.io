@@ -184,8 +184,13 @@ let translations={
 
   '惊蛰':['Hibernating Insects Awaken','Jingjer'],
   '桃始华':['the peach tree starts flowering','Taurshyyhwa'],
-  '仓庚鸣':['the black-naped oriole calls','Tsang\'gengmyng'],
+  '仓庚鸣':['the black-naped oriole calls','Tsanggengmyng'],
   '鹰化鸠':['eagles turn into doves','Inghuahjiou'],
+
+  '春分':['Spring Equinox','Chuenfen'],
+  '玄鸟至':['black birds come','Shyuan\'neaujyh'],
+  '雷乃声':['thunder starts sounding','Leirnaesheng'],
+  '光始电':['lightning starts','Guangshyydiann'],
 
   '处暑':['End of Heat','Chuhshuu'],
   '鹰乃祭':['the eagle sacrifices','Ingnaejih'],
@@ -195,7 +200,12 @@ let translations={
   '白露':['White Dew','Bairluh'],
   '鸿雁来':['the swan goose comes','Horngyannlair'],
   '玄鸟归':['swallow returns','Shyuan\'neauguei'],
-  '群鸟羞':['birds store food','Chyun\'neaushiou']
+  '群鸟羞':['birds store food','Chyun\'neaushiou'],
+
+  '秋分':['Autumn Equinox','Chiufen'],
+  '雷收声':['thunder stops sounding','Leirshousheng'],
+  '蛰坯户':['*Eupolyphaga sinensis* makes nests','Jerpi\'huh'],
+  '水始涸':['water starts drying','Shoeishyy\'her'],
 }
 
 let shinjintai={
@@ -218,7 +228,9 @@ let shinjintai={
   '蛰':'蟄',
   '华':'華',
   '仓':'倉',
-  '鸠':'鳩'
+  '鸠':'鳩',
+  '电':'電',
+  '收':'収'
 }
 
 function getTranslation(x){
@@ -296,4 +308,5 @@ document.getElementById('year').value=new Date().getFullYear();
 update();
 
 document.getElementById('year').addEventListener('keyup',(e)=>{e.key=='Enter'?update():null;});
+
 

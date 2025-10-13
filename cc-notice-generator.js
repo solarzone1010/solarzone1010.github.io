@@ -192,6 +192,11 @@ let translations={
   '雷乃声':['thunder starts sounding','Leirnaesheng'],
   '光始电':['lightning starts','Guangshyydiann'],
 
+  '清明':['Clear and Bright','Chingmying'],
+  '桐始华':['paulownias start flowering','Torngshyyhwa'],
+  '田鼠隐':['field mice hid','Tyenshuu\'yiin'],
+  '虹始见':['rainbows start being seen','Horngshyyjiann'],
+
   '处暑':['End of Heat','Chuhshuu'],
   '鹰乃祭':['the eagle sacrifices','Ingnaejih'],
   '天地肃':['sky and earth shrink','Tiandihsuh'],
@@ -206,6 +211,11 @@ let translations={
   '雷收声':['thunder stops sounding','Leirshousheng'],
   '蛰坯户':['*Eupolyphaga sinensis* makes nests','Jerpi\'huh'],
   '水始涸':['water starts drying','Shoeishyy\'her'],
+
+  '寒露':['Cold Dew','Harnluh'],
+  '鸿雁宾':['the black-billed goose stays','Horngyannbinn'],
+  '雀入水':['sparrows enter water','Chiuehruhshoei'],
+  '菊花黄':['chrysanthemum flowers yellow','Jyu\'hua\'hwang']
 }
 
 let shinjintai={
@@ -230,7 +240,10 @@ let shinjintai={
   '仓':'倉',
   '鸠':'鳩',
   '电':'電',
-  '收':'収'
+  '收':'収',
+  '华':'華',
+  '隐':'隠',
+  '宾':'賓'
 }
 
 function getTranslation(x){
@@ -308,5 +321,6 @@ document.getElementById('year').value=new Date().getFullYear();
 update();
 
 document.getElementById('year').addEventListener('keyup',(e)=>{e.key=='Enter'?update():null;});
+
 
 

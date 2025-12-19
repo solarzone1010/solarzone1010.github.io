@@ -231,6 +231,18 @@ function U(M,n){
 }
 
 function mv(M,n,k){ // value of upgrader; k is same as in ov
+  if(k){
+    let A=[k];
+    while(A.at(-1)!=n){ // "correct" value of k to avoid infinite loop
+      A.push(P(M,0,A.at(-1)));
+      if(!M[A.at(-1)][0]){break;} // if this ever gets used something's gone wrong
+    }
+    if(A.includes(n)){
+      for(i of A.toReversed()){
+        if(M[i][2]==0){k=i;break;}
+      }
+    }
+  }
   let S='0';
   for(i of C(M,n)){
     if(i>k&&k){break;}
@@ -254,7 +266,7 @@ function mv(M,n,k){ // value of upgrader; k is same as in ov
 
 function ov(M,n,k){ // k = 3 (31) in 0 111 211 31 2 (-> T, since 31 is chain-upgraded)
   if(n==k){return'P(0)';}
-  if(M[n][2]==0){return o(M,n);}
+  if(M[n][2]==0){return o(M,n,k);}
   let S='0';
   for(let i of C(M,n)){
     if(i>k&&k){break;}
@@ -263,23 +275,25 @@ function ov(M,n,k){ // k = 3 (31) in 0 111 211 31 2 (-> T, since 31 is chain-upg
   return`P(${S})`;
 }
 
-function v(M,n){
+function v(M,n,k){ // k is necessary to make the k value persist from ov (maybe? keeping it just in case)
+  console.log(n,k)
   if(M[n][1]==0){return '0';}
   if(M[n][2]==0){
     let u=U(M,n);
     u=(u[0]?mv(M,u[1],n*(u[0]==2)):'p(0)');
-    return add(v(M,P(M,1,n)),u);
+    return add(v(M,P(M,1,n),k),u);
   }
-  return add(v(M,P(M,1,n)),mv(M,n,0));
+  return add(v(M,P(M,1,n),k),mv(M,n,k));
 }
 
-function o(M,n){
+function o(M,n,k){ // k is necessary to make the k value persist from ov
   let S='0';
   for(let i of C(M,n)){
+    if(i>k){break;}
     if(skipped(M,n).includes(i)){continue;}
-    S=add(S,o(M,i));
+    S=add(S,o(M,i,k));
   }
-  return `p(${add(mul('P(0)',v(M,n)),S)})`;
+  return `p(${add(mul('P(0)',v(M,n,k)),S)})`;
 }
 
 function skipped(M,n){
@@ -367,6 +381,4 @@ function calculate(){
   document.getElementById('output2').innerHTML=Q;
 }
 document.getElementById('input').value='(0)(1,1,1)(2,1,1)(3,1,1)(1,1,1)(2,1,1)(3,1)(4,2,1)(5,2,1)(6,2,1)(2,1)(3,2,1)(4,2,1)(5,2,1)';
-
 calculate();
-

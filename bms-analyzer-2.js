@@ -363,8 +363,9 @@ function calculate(){
     }
     Q+='</tr>';
   }
-  Q+=`<tr><td>Σ</td><td colspan=7>${''}</td></tr>`;
+  Q+=`<tr><td>Σ</td><td colspan=7>${_o(M)}</td></tr>`;
   document.getElementById('output2').innerHTML=Q;
 }
 document.getElementById('input').value='(0)(1,1,1)(2,1,1)(3,1,1)(1,1,1)(2,1,1)(3,1)(4,2,1)(5,2,1)(6,2,1)(2,1)(3,2,1)(4,2,1)(5,2,1)';
+
 calculate();

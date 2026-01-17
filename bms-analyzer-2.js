@@ -1,5 +1,6 @@
 function eq(a,b){
   if(typeof(a)=='number'){return a==b;}
+  if(a.length==2){return eq(a[0],b[0])&&eq(a[1],b[1]);}
   return eq(a[0],b[0])&&eq(a[1],b[1])&&eq(a[2],b[2]);
 }
 
@@ -116,8 +117,7 @@ function op(x){ // "does it need parentheses when you write something*x"
   return false;
 }
 
-// I could make it do up to K if I wanted, but I'm running low on time... since tomorrow I'm going to Korea (19 Dec 2025)
-// also does not handle I(ψ(T^M),1) because it's too complicated
+// does not handle I(ψ(T^M),1) because it's too complicated
 function display(x,y){
   //if(!y){return 'X'}
   //console.log(x);
@@ -233,7 +233,7 @@ function U(M,n){
 function mv(M,n,k){ // value of upgrader; k is same as in ov
   if(k){
     let A=[k];
-    while(A.at(-1)!=n){ // "correct" value of k to avoid infinite loop
+    while(A.at(-1)!=n){ // "correct" value of k (justified?)
       A.push(P(M,0,A.at(-1)));
       if(!M[A.at(-1)][0]){break;} // if this ever gets used something's gone wrong
     }
@@ -254,10 +254,9 @@ function mv(M,n,k){ // value of upgrader; k is same as in ov
     }
     S=add(S,exp(q));
   }
-  let X=C(M,n).filter(x=>M[x][2]);
+  let X=C(M,n).filter(x=>M[x][2]&&C(M,x).length);
   let p;
   if(!X.length){p=1;}
-  else if(!CR(M,X.at(-1)).length){p=1;}
   else{p=M[CR(M,X.at(-1)).at(-1)][2];}
   if(lt(sua(S)[1],'p(p(0))')&&p&&!k){S=add(S,'p(0)');} // 111 211 311 = ψ(T^2·ω), not ψ(T^2)
                                                        // also, if k!=0, the condition will never be activated, since then it's a fixed point.
@@ -276,20 +275,20 @@ function ov(M,n,k){ // k = 3 (31) in 0 111 211 31 2 (-> T, since 31 is chain-upg
 }
 
 function v(M,n,k){ // k is necessary to make the k value persist from ov (maybe? keeping it just in case)
-  console.log(n,k)
+  // console.log(n,k)
   if(M[n][1]==0){return '0';}
   if(M[n][2]==0){
     let u=U(M,n);
     u=(u[0]?mv(M,u[1],n*(u[0]==2)):'p(0)');
     return add(v(M,P(M,1,n),k),u);
   }
-  return add(v(M,P(M,1,n),k),mv(M,n,k));
+  return add(v(M,P(M,2,n),k),mv(M,n,k));
 }
 
 function o(M,n,k){ // k is necessary to make the k value persist from ov
   let S='0';
   for(let i of C(M,n)){
-    if(i>k){break;}
+    if(i>k&&k){break;}
     if(skipped(M,n).includes(i)){continue;}
     S=add(S,o(M,i,k));
   }
@@ -299,15 +298,20 @@ function o(M,n,k){ // k is necessary to make the k value persist from ov
 function skipped(M,n){
   let S=[];
   let u=[...Array(M.length).keys()].map(x=>(U(M,x)[0]==1?U(M,x)[1]:null));
+  //let u2=[...Array(M.length).keys()].map(x=>(U(M,x)[0]==2?U(M,x)[1]:null));
   for(let i of C(M,n)){
+    S=S.concat(skipped(M,i)); // for display purposes
     if(M[i][2]&&M[n][2]){S.push(i);continue;}
     if(u.includes(i)){
       let c=C(M,i);
-      if(c.length){if(eq(M[c.at(-1)],[M[i][0]+1,M[i][1],1])){S.push(i);}} // e.g. 0 111 211 21 111 211
+      if(c.length){ // e.g. 0 111 211 21 111 211
+        let j=c.at(-1);
+        if(eq(M[j],[M[i][0]+1,M[i][1],1])){S.push(i);}
+        else if(eq(U(M,j-1),[2,i])&&eq(M[j],[M[i][0]+1,0,0])&&!C(M,j).length){S.push(i);}
+      }
       else{S.push(i);continue;}
     }
-    if(eq(M[i],[M[n][0]+1,0,0])&&U(M,i-1)[0]==2&&U(M,i-1)[1]==n&&!C(M,i).length){S.push(i);continue;}
-    S=S.concat(skipped(M,i));
+    if(eq(M[i],[M[n][0]+1,0,0])&&eq(U(M,i-1),[2,n])&&!C(M,i).length){S.push(i);continue;}
   }
   return S;
 }
@@ -326,14 +330,17 @@ function _skipped(M){
 
 function createTable(X){return X.map(x=>'<tr>'+x.map(y=>'<td>'+y+'</td>').join('')+'</tr>').join('');}
 
+let last=''
 
 function calculate(){
-  let M=document.getElementById('input').value;
+  //if(document.getElementById('input').value==last){return;}
+  console.log('a')
+  let M=document.getElementById('input').value.replaceAll(' ','');
   try{M=eval('['+M.replaceAll(')(','],[').replaceAll('(','[').replaceAll(')',']')+']');}
   catch(e){return;}
   M=M.map(x=>{let y=x.slice();while(y.length<3){y.push(0)}return y;});
   let A=[...Array(M.length).keys()].map(x=>D(M,x));
-  if(Math.max(...A)>15){
+  if(Math.max(...A)>70){
     document.getElementById('output').innerHTML='Too complex';
     document.getElementById('output3').innerHTML='';
     let Q='<tr><th class="border">i</th><th class="border" colspan=3>M<sub>i</sub></th><th class="border">o(M,i)</th><th class="border">v(M,i)</th><th class="border">U(M,i)</th><th class="border">Children</th>';
@@ -379,6 +386,7 @@ function calculate(){
   }
   Q+=`<tr><td>Σ</td><td colspan=7>${display(_o(M))}</td></tr>`;
   document.getElementById('output2').innerHTML=Q;
+  last=document.getElementById('input').value;
 }
 document.getElementById('input').value='(0)(1,1,1)(2,1,1)(3,1,1)(1,1,1)(2,1,1)(3,1)(4,2,1)(5,2,1)(6,2,1)(2,1)(3,2,1)(4,2,1)(5,2,1)';
 calculate();

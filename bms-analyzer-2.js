@@ -161,7 +161,7 @@ function display(x,y){
       else if(m=='P(0)'){s='M';}
       if(s==''){return `ψ(${display(arg(x))})`;}
       if(l=='p(0)'){return s.replace('x','0');}
-      if(s.includes('x')){return s.replace('x',display(l));}
+      if(s.includes('x')){return s.replace('x',display(sub(l,'p(0)')));}
       return `${s}<sub>${display(l)}</sub>`;
     }
     return `ψ(${display(arg(x))})`;
@@ -390,3 +390,4 @@ function calculate(){
 }
 document.getElementById('input').value='(0)(1,1,1)(2,1,1)(3,1,1)(1,1,1)(2,1,1)(3,1)(4,2,1)(5,2,1)(6,2,1)(2,1)(3,2,1)(4,2,1)(5,2,1)';
 calculate();
+

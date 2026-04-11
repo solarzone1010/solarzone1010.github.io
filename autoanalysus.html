@@ -122,10 +122,15 @@
                     </li>
                     <li>Draws Y hydras</li>
                     <li>
-                        Calculate with numbers up to 10^^10
+                        Calculate with numbers up to 10^^10^24
                         <ul>
                             <li>Automatically convert exact integers above 10<sup>1,000</sup> to this format, to prevent the bot locking up</li>
-                            <li>Calculates with 24 digits of precision, instead of IEEE doubles' 16</li>
+                            <li>
+                                Calculates with 24 digits of precision, instead of the IEEE double's 16
+                                <ul>
+                                    <li>(this 24 digits refers to the number x in 10^10^...^(x·10^y), not 24 digits after the decimal point.)</li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                     <li>Ordinal number line position command will not lock up the bot upon entering a non-standard matrix</li>
@@ -153,7 +158,7 @@
                     <li>
                         Expands DBMS (≤3D), weak magma ω-Y, and MMS
                         <ul>
-                            <li>Also expands Rathjen's ψ and Rathjen's Ψ.</li>
+                            <li>Also expands Rathjen's ψ, Rathjen's Ψ, and my OCFs up to the one using n-Mahlos</li>
                         </ul>
                     </li>
                     <li>Simulates Turing machines</li>
@@ -210,9 +215,11 @@
                         <ul>
                             <li>Expands BAN (both dshamlin and original) up to their limits</li>
                             <li>Expands HAN</li>
+                            <li>Expands my weakly compact and Π₄-reflecting OCFs</li>
                         </ul>
                     </li>
                     <li>Output format for ordinals is adjustable</li>
+                    <li>Describes ordinals up to BO</li>
                     <li>Multi-language support</li>
                 </ul>
             </td>
@@ -225,11 +232,18 @@
                 <ul>
                     <li>Converts between any pair of notations, as long as Python definitions are provided</li>
                     <li>
+                        Expands Stegert's (*2)-stable Ψ
+                        <ul>
+                            <li>Also expands Arai's <b>Z</b><sub>2</sub> ψ</li>
+                            <li>Expands my (+1)-stable OCF</li>
+                        </ul>
+                    </li>
+                    <li>
                         Calculates if any Turing machine or λ-calculus expression terminates
                         <ul>
                             <li>This allows one to calculate Busy Beaver, the maximum shifts function, etc. in approximately O(n) time.</li>
                             <li>Can calculate if any theory is consistent or not (may take up to 120 seconds)</li>
-                            <li>Also supports JS and Python 3.8 (work is ongoing on the Python version)</li>
+                            <li>Also supports JS and Python 3.8 (work is ongoing on the Python version, to get it to Python 3.15)</li>
                             <li>Halting oracle for some ITTMs</li>
                             <li>Also has a level ω<sub>1</sub><sup>CK</sup> halting oracle, but the algorithm is still inefficient</li>
                         </ul>
@@ -247,10 +261,23 @@
                             <li>SAN conversion command can summon umbrellas</li>
                         </ul>
                     </li>
-                    <li>Autoanalysus AI can help you make the next groundbreaking discovery, or help you formalize your notation</li>
+                    <li>
+                        Autoanalysus AI can help you make the next groundbreaking googology discovery
+                        <ul>
+                            <li>It can also help you formalize your new notation</li>
+                            <li>Or analyze your new notation</li>
+                            <li>Or teach you Veblen's φ, OCFs, etc.</li>
+                        </ul>
+                    </li>
                 </ul>
             </td>
-            <td style="text-align:center;">$99<sup style="text-decoration:underline;">99</sup>/month<br>OR<br>$999/yr</td>
+            <td style="text-align:center;">
+                $99<sup style="text-decoration:underline;">99</sup>/month<br>
+                OR<br>
+                $999/yr<br>
+                OR<br>
+                all personal<br>data/month
+            </td>
         </tr>
     </table>
 </body>

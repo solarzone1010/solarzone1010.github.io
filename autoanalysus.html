@@ -223,13 +223,15 @@
             <td>
                 The limit is now ω<sub>1</sub><sup>CK</sup>, using λ-calculus as the ordinal representation.<br>
                 <ul>
-                    <li>Converts between any pair of notations, as long as Python definitions is provided</li>
+                    <li>Converts between any pair of notations, as long as Python definitions are provided</li>
                     <li>
                         Calculates if any Turing machine or λ-calculus expression terminates
                         <ul>
                             <li>This allows one to calculate Busy Beaver, the maximum shifts function, etc. in approximately O(n) time.</li>
-                            <li>Some ITTMs can be simulated</li>
                             <li>Can calculate if any theory is consistent or not (may take up to 120 seconds)</li>
+                            <li>Also supports JS and Python 3.8 (work is ongoing on the Python version)</li>
+                            <li>Halting oracle for some ITTMs</li>
+                            <li>Also has a level ω<sub>1</sub><sup>CK</sup> halting oracle, but the algorithm is still inefficient</li>
                         </ul>
                     </li>
                     <li>

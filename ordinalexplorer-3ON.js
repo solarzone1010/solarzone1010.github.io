@@ -44,9 +44,7 @@ function FS(a,n){
     let v=a.slice(i+1,x-1);
     var o=a.slice(0,i);
     let m=null
-    console.log(v)
     for(let i=0;i<n;i++){
-      console.log(b,c)
       let t=repl(v,b,c);
       o+='['+t+']';
       c+='['+t+']';

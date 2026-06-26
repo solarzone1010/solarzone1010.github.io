@@ -193,12 +193,12 @@ function C(M,n){
   return X;
 }
 
-function CR(M,n){
+function CR(M,n){ // modified slightly to handle use in mv
   let X=[];
   for(let i=0;i<M.length;i++){
     if(P(M,0,i)==n){
       X.push(i);
-      X=X.concat(CR(M,i));
+      if(M[i][2]){X=X.concat(CR(M,i))};
     }
   }
   return X;

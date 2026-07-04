@@ -48,6 +48,8 @@ function lt(x,y){
   return lt(firstTerm(x)[1],firstTerm(y)[1]);
 }
 
+function gt(x,y){return !(x==y&&lt(x,y))}
+
 function add(x,y){
   if(x=='0'){return y;}
   if(y=='0'){return x;}
@@ -316,7 +318,43 @@ function skipped(M,n){
   return S;
 }
 
+// standardization
+
+function psi(a){return `p(${a})`;}
+function _0(a){return sua(arg(a))[0];}
+function _1(a){return sua(arg(a))[1];}
+function _01(a){return firstTerm(a)[0];}
+function _2(a){return firstTerm(a)[1];}
+
+function ttc(a,b){
+  if(a=='0'){return '0';}
+  if(ttc(_2(a),b)=='0'&&lt(_01(a),psi(b))){return '0';}
+  return add(_01(a),ttc(_2(a),b));
+}
+
+function sp(a,b,c){
+  if(c=='0'){return psi(add(a,b));}
+  if(lt(b,_1(c))&&gt(c,psi(a))){
+    let t=ttc(_1(c),add(_0(c),'P(0)'));
+    //console.log(t);
+    return sp(a,add(t,sub(_01(c),psi(add(_0(c),t)))),_2(c));
+  }
+  return sp(a,add(b,_01(c)),_2(c));
+}
+
+function sf(a){
+  if(a=='0'){return '0';}
+  if(a[0]=='P'){return add(`P(${sf(arg(a))})`,sf(_2(a)));}
+  return add(sp(sf(_0(a)),'0',sf(_1(a))),sf(_2(a)));
+}
+
 function _o(M){
+  let S='0';
+  for(let i=0;i<M.length;i++){if(eq(M[i],[0,0,0])){S=add(S,o(M,i));}}
+  return sf(S);
+}
+
+function NS(M){
   let S='0';
   for(let i=0;i<M.length;i++){if(eq(M[i],[0,0,0])){S=add(S,o(M,i));}}
   return S;
@@ -334,7 +372,7 @@ let last=''
 
 function calculate(){
   //if(document.getElementById('input').value==last){return;}
-  console.log('a')
+  console.log('')
   let M=document.getElementById('input').value.replaceAll(' ','');
   try{M=eval('['+M.replaceAll(')(','],[').replaceAll('(','[').replaceAll(')',']')+']');}
   catch(e){return;}
@@ -358,7 +396,11 @@ function calculate(){
     document.getElementById('output2').innerHTML=Q;
     return;
   }
-  document.getElementById('output').innerHTML=display(_o(M));
+  let ord=_o(M);
+  let ord2=NS(M);
+  document.getElementById('output').innerHTML=display(ord);
+  document.getElementById('output3').innerHTML=(lt(ord,'p(p(P(p(P(P(0))))))')?'':'(maybe not completely standard)')
+  document.getElementById('output3').innerHTML=(ord2==ord?'':'<i>n.s.</i> '+display(ord2));
   let Q='<tr><th class="border">i</th><th class="border" colspan=3>M<sub>i</sub></th><th class="border">o(M,i)</th><th class="border">v(M,i)</th><th class="border">U(M,i)</th><th class="border">Children</th>';
   let u=[...Array(M.length).keys()].map(x=>U(M,x)[1]);
   let u1=[...Array(M.length).keys()].filter(x=>x!=null).map(x=>U(M,x)[1]*(-1)**U(M,x)[0]);
@@ -384,10 +426,9 @@ function calculate(){
     }
     Q+='</tr>';
   }
-  Q+=`<tr><td>Σ</td><td colspan=7>${display(_o(M))}</td></tr>`;
+  Q+=`<tr><td>Σ</td><td colspan=7>${display(ord2)}</td></tr>`;
   document.getElementById('output2').innerHTML=Q;
   last=document.getElementById('input').value;
 }
 document.getElementById('input').value='(0)(1,1,1)(2,1,1)(3,1,1)(1,1,1)(2,1,1)(3,1)(4,2,1)(5,2,1)(6,2,1)(2,1)(3,2,1)(4,2,1)(5,2,1)';
 calculate();
-

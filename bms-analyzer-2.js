@@ -161,6 +161,9 @@ function display(x,y){
       else if(m=='p(0)+p(0)'){s='I';}
       else if(lt(m,'p(P(P(p(P(P(P(0)))))))')){s=`I(${display(sub(m,'p(0)+p(0)'))},x)`;}
       else if(m=='P(0)'){s='M';}
+      else if(m=='P(P(0))'){s='N';}
+      else if(m=='P(P(P(0)))'){s='K';}
+      else if(m=='P(P(P(P(0))))'){s='U';}
       if(s==''){return `ψ(${display(arg(x))})`;}
       if(l=='p(0)'){return s.replace('x','0');}
       if(s.includes('x')){return s.replace('x',display(sub(l,'p(0)')));}

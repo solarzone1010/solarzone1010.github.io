@@ -399,7 +399,7 @@ function calculate(){
   let ord=_o(M);
   let ord2=NS(M);
   document.getElementById('output').innerHTML=display(ord);
-  document.getElementById('output3').innerHTML=(lt(ord,'p(p(P(p(P(P(0))))))')?'':'(maybe not completely standard)')
+  document.getElementById('output4').innerHTML=(lt(ord,'p(p(P(p(P(P(0))))))')?'':'(maybe not completely standard)')
   document.getElementById('output3').innerHTML=(ord2==ord?'':'<i>n.s.</i> '+display(ord2));
   let Q='<tr><th class="border">i</th><th class="border" colspan=3>M<sub>i</sub></th><th class="border">o(M,i)</th><th class="border">v(M,i)</th><th class="border">U(M,i)</th><th class="border">Children</th>';
   let u=[...Array(M.length).keys()].map(x=>U(M,x)[1]);

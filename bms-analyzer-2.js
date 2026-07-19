@@ -126,6 +126,7 @@ function display(x,y){
   if(x=='0'){return '0';}
   if(/^(p\(0\)\+)*p\(0\)$/.test(x)){return ((x.length+1)/5).toString();}
   let f=(x[0]=='p')?`p(${sua(arg(x))[0]})`:'P(0)';
+  let f1=(x[0]=='p')?sua(arg(x),'P(0)')[1]:arg(x);
   let g=null;
   let h=null;
   if(f=='p(0)'){f='p(p(0))';g=log(x);h=firstTerm(x)[0];}
@@ -164,11 +165,13 @@ function display(x,y){
       else if(m=='P(P(0))'){s='N';}
       else if(m=='P(P(P(0)))'){s='K';}
       else if(m=='P(P(P(P(0))))'){s='U';}
+      else if(lt(m,'P(p(P(P(P(0)+p(P(P(P(0)+P(0))))))))')&&!lt(lastTerm(m)[1],'P(0)')){s=`M(${display(sub(div(m,'P(0)'),'p(0)'))},x)`;}
       if(s==''){return `ψ(${display(arg(x))})`;}
       if(l=='p(0)'){return s.replace('x','0');}
       if(s.includes('x')){return s.replace('x',display(sub(l,'p(0)')));}
       return `${s}<sub>${display(l)}</sub>`;
     }
+    if(lt(f,'p(P(p(P(P(0)))))')&&gt(x,'p(P(0))')){return `ψ<sub>${display(div(arg(f),'P(0)'))}</sub>(${display(f1)})`;}
     return `ψ(${display(arg(x))})`;
   }
   let a=display(h);
